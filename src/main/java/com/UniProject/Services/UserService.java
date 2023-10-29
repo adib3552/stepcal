@@ -48,6 +48,9 @@ public class UserService {
         User check=userRepository.findByEmail(email);
         return check==null;
     }
+    public User findEmail(String email){
+        return userRepository.findByEmail(email);
+    }
     public boolean checkEmailVerification(String email){
         return userRepository.findByEmail(email).isEnabled();
     }

@@ -1,8 +1,8 @@
 package com.UniProject.Controller;
 
-import com.UniProject.Entities.LoginDetails;
+import com.UniProject.DTO.LoginDetails;
 import com.UniProject.Entities.User;
-import com.UniProject.Entities.VerCode;
+import com.UniProject.DTO.VerCode;
 import com.UniProject.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +17,11 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @GetMapping("/message")
+    public ResponseEntity<String>showMessage(){
+        return ResponseEntity.status(HttpStatus.OK).body("This is for User");
+    }
 
     @GetMapping("/profile/{email}")
     public User getUser(@PathVariable("email") String email){

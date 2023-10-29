@@ -1,4 +1,4 @@
-package com.UniProject.Entities;
+package com.UniProject.DTO;
 
 public class VerCode {
     private int code;
