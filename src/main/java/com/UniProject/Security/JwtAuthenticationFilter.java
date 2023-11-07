@@ -1,10 +1,8 @@
 package com.UniProject.Security;
 
-import com.UniProject.Entities.CustomUserDetails;
-import com.UniProject.Entities.User;
+
 import com.UniProject.Services.CustomUserDetailsService;
 import com.UniProject.Services.JwtService;
-import com.UniProject.Services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,6 +52,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 securityContext.setAuthentication(token);
                 SecurityContextHolder.setContext(securityContext);
+
+                request.setAttribute("email",userEmail);
             }
 
         }

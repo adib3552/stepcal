@@ -26,7 +26,7 @@ public class AuthenticationService {
     private CustomUserDetailsService userService;
 
 
-    public JwtResponse signin(SignInRequest signInRequest){
+    public JwtResponse login(SignInRequest signInRequest){
         //authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signInRequest.getEmail(),signInRequest.getPassword()));
         UserDetails user=userService.loadUserByUsername(signInRequest.getEmail());
         if(user==null){
