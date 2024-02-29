@@ -1,6 +1,7 @@
 package com.UniProject.Controller;
 
 import com.UniProject.DTO.LoginDetails;
+import com.UniProject.DTO.TaskDto;
 import com.UniProject.DTO.UserDto;
 import com.UniProject.Entities.User;
 import com.UniProject.DTO.VerCode;
@@ -31,6 +32,11 @@ public class UserController {
         return userService.getUser(email);
     }
 
+    @GetMapping("/task")
+    public TaskDto sendTask(HttpServletRequest request){
+        String email=(String) request.getAttribute("email");
+        return userService.forTask(email);
+    }
 
     @GetMapping("/verify/{email}")
     public ResponseEntity<String> sendEmail(@PathVariable String email){

@@ -1,12 +1,16 @@
 package com.UniProject.Services;
 
 import com.UniProject.DTO.DtoImpl;
+import com.UniProject.DTO.TaskDto;
+import com.UniProject.DTO.TaskParam;
 import com.UniProject.DTO.UserDto;
 import com.UniProject.Entities.User;
 import com.UniProject.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class UserService {
@@ -18,6 +22,8 @@ public class UserService {
 
     @Autowired
     private DtoImpl dto;
+
+    private TaskParam taskParam;
 
 
 
@@ -35,7 +41,16 @@ public class UserService {
             return 0;//Internal server error
         }
     }
+    public TaskDto forTask(String email){
+        UserDto user=dto.convertUserToUserDto(userRepository.findByEmail(email));
+        //setting the parameter to compute
+        taskParam=new TaskParam(user.getAge(),user.getHeight(),user.getWeight(),user.getGoal(),user.getGender());
 
+        TaskDto task=new TaskDto();
+        task.setTarget_Calorie(computeTargetCalorie(taskParam));
+
+        return task;
+    }
     @Transactional
     public void verifyUser(String email){
          userRepository.updateUserEnable(email);
@@ -63,5 +78,11 @@ public class UserService {
     }
     public int getVerCode(String toEmail){
         return emailService.sendVerEmail(toEmail);
+    }
+
+    public double computeTargetCalorie(TaskParam taskParam){
+        //calculate bmr
+        double bmr=88.362+(13.397 * taskParam.getWeight())+(4.799 * taskParam.getHeight())-(5.677*taskParam.getAge());
+        return bmr;
     }
 }
