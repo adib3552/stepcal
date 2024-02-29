@@ -15,4 +15,9 @@ public class UserDto {
     private String email;
     private String password;
     private long phone_no;
+    private int age;
+    private double height;
+    private double weight;
+    private String goal;
+    private String gender;
 }

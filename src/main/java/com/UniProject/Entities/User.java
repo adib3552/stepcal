@@ -21,6 +21,12 @@ public class User {
     private String last_name;
     private String email;
     private String password;
+    private int age;
+    private double height;
+    private double weight;
+    private String gender;
+    private String goal;
+    private int point;
     private long phone_no;
     private boolean isEnabled;
     private String role;

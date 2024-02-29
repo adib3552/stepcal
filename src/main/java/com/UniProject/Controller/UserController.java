@@ -32,7 +32,6 @@ public class UserController {
     }
 
 
-
     @GetMapping("/verify/{email}")
     public ResponseEntity<String> sendEmail(@PathVariable String email){
         userEmail=email;

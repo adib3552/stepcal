@@ -12,6 +12,11 @@ public class DtoImpl {
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
         user.setPhone_no(userDto.getPhone_no());
+        user.setAge(userDto.getAge());
+        user.setHeight(userDto.getHeight());
+        user.setGoal(userDto.getGoal());
+        user.setWeight(userDto.getWeight());
+        user.setGender(userDto.getGender());
         user.setRole("USER");
 
         return user;
@@ -24,6 +29,11 @@ public class DtoImpl {
         userDto.setEmail(user.getEmail());
         userDto.setId(user.getId());
         userDto.setPhone_no(user.getPhone_no());
+        userDto.setAge(user.getAge());
+        userDto.setGender(user.getGender());
+        userDto.setHeight(user.getHeight());
+        userDto.setGoal(user.getGoal());
+        userDto.setWeight(user.getWeight());
 
         return userDto;
     }
