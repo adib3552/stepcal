@@ -30,4 +30,5 @@ public class User {
     private long phone_no;
     private boolean isEnabled;
     private String role;
+    private String activity_level;
 }

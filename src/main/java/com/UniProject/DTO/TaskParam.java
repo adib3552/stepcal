@@ -13,4 +13,5 @@ public class TaskParam {
     private double weight;
     private String Goal;
     private String gender;
+    private String activity_level;
 }

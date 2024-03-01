@@ -20,4 +20,5 @@ public class UserDto {
     private double weight;
     private String goal;
     private String gender;
+    private String activity_level;
 }

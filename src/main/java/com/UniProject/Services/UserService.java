@@ -44,7 +44,9 @@ public class UserService {
     public TaskDto forTask(String email){
         UserDto user=dto.convertUserToUserDto(userRepository.findByEmail(email));
         //setting the parameter to compute
-        taskParam=new TaskParam(user.getAge(),user.getHeight(),user.getWeight(),user.getGoal(),user.getGender());
+        taskParam=new TaskParam(user.getAge(),user.getHeight(),
+                user.getWeight(),user.getGoal(),
+                user.getGender(), user.getActivity_level());
 
         TaskDto task=new TaskDto();
         task.setTarget_Calorie(computeTargetCalorie(taskParam));
@@ -63,9 +65,12 @@ public class UserService {
         return userRepository.findByEmailAndPassword(email,pass);
     }
 
+
     /**
      * For mail
      **/
+
+
     public boolean checkForDuplicateEmail(String email){
         User check=userRepository.findByEmail(email);
         return check==null;
@@ -80,9 +85,52 @@ public class UserService {
         return emailService.sendVerEmail(toEmail);
     }
 
+
+    /**
+     *For Calorie computation
+     */
     public double computeTargetCalorie(TaskParam taskParam){
         //calculate bmr
-        double bmr=88.362+(13.397 * taskParam.getWeight())+(4.799 * taskParam.getHeight())-(5.677*taskParam.getAge());
-        return bmr;
+        double a,b,c,d;
+        if(taskParam.getGender().equals("male")){
+            a=88.362;
+            b=13.397;
+            c=4.799;
+            d=5.677;
+        }
+        else{
+            a=447.593;
+            b=9.247;
+            c=3.098;
+            d=4.330;
+        }
+        double bmr=a+(b*taskParam.getWeight())+(c*taskParam.getHeight())-(d*taskParam.getAge());
+        int goal=0;
+        if(taskParam.getGoal().equals("gain") || taskParam.getGoal().equals("muscle")){
+            goal+=200;
+        }
+        else if(taskParam.getGoal().equals("loss")) {
+            goal-=200;
+        }
+        return (bmr*activityMult(taskParam))+goal;
     }
+    public double activityMult(TaskParam taskParam){
+        if(taskParam.getActivity_level().equals("lazy")){
+            return 1.2;
+        }
+        else if(taskParam.getActivity_level().equals("low")){
+            return 1.375;
+        }
+        else if(taskParam.getActivity_level().equals("moderate")){
+            return 1.55;
+        }
+        else if(taskParam.getActivity_level().equals("high")){
+            return 1.725;
+        }
+        else if(taskParam.getActivity_level().equals("extreme")){
+            return 1.9;
+        }
+        return 0;
+    }
+
 }
