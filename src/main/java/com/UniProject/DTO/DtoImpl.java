@@ -17,7 +17,7 @@ public class DtoImpl {
         user.setGoal(userDto.getGoal());
         user.setWeight(userDto.getWeight());
         user.setGender(userDto.getGender());
-        user.setActivity_level(user.getActivity_level());
+        user.setActivity_level(userDto.getActivity_level());
         user.setRole("USER");
 
         return user;

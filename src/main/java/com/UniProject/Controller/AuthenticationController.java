@@ -37,6 +37,7 @@ public class AuthenticationController {
     @PostMapping("/save")
     public ResponseEntity<String> saveUser(@RequestBody UserDto user) {
         if (!userService.checkForDuplicateEmail(user.getEmail())) {
+            System.out.println(user);
             // Redirect back to the form with an error message
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exist try another email");
         }
