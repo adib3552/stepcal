@@ -49,7 +49,8 @@ public class ActivityLevel extends AppCompatActivity {
                }
                Intent prevIntent=getIntent();
                User user=(User) prevIntent.getSerializableExtra("user");
-               user.setActivity_level(level);
+                assert user != null;
+                user.setActivity_level(level);
                 Intent intent = new Intent(ActivityLevel.this, Goal.class);
                 intent.putExtra("user", user);
                 startActivity(intent);

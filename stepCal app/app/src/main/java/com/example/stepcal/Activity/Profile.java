@@ -3,8 +3,11 @@ package com.example.stepcal.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,15 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         apiInterface= RetrofitClient.getRetrofit().create(ApiInterface.class);
         authToken=getSavedToken();
+
+        Button task=findViewById(R.id.task);
+        task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Profile.this,Tasks.class);
+                startActivity(intent);
+            }
+        });
         apiInterface.getProfile(" Bearer "+authToken).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
@@ -40,7 +52,6 @@ public class Profile extends AppCompatActivity {
                 email.setText(profile.getEmail());
                 System.out.println(profile);
             }
-
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 Toast.makeText(Profile.this, t.toString(), Toast.LENGTH_SHORT).show();

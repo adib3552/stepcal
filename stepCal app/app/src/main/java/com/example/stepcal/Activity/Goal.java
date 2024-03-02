@@ -56,6 +56,7 @@ public class Goal extends AppCompatActivity {
                 }
                 Intent prevIntent=getIntent();
                 User user=(User) prevIntent.getSerializableExtra("user");
+                System.out.println(user);
                 assert user != null;
                 user.setGoal(goal);
 

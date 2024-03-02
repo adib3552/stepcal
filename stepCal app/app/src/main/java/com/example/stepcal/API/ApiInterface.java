@@ -25,4 +25,5 @@ public interface ApiInterface {
 
     @GET("/user/task")
     Call<Task> getTask(@Header("Authorization") String token);
+
 }
