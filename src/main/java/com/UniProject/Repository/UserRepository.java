@@ -14,4 +14,5 @@ public interface UserRepository extends CrudRepository<User,Long> {
     @Modifying
     @Query("Update User u set u.isEnabled=true where u.email=:email")
     void updateUserEnable(@Param("email") String email);
+
 }
