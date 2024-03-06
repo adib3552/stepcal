@@ -10,7 +10,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.DoubleToLongFunction;
 
 @Component
 public class UserService {
@@ -50,6 +53,9 @@ public class UserService {
 
         TaskDto task=new TaskDto();
         task.setTarget_Calorie(computeTargetCalorie(taskParam));
+        task.setExercises(ExerciseList(taskParam));
+
+        //need to set here task
         System.out.println(task);
         return task;
     }
@@ -132,5 +138,41 @@ public class UserService {
         }
         return 0;
     }
+   /**/
+   public Map<String,Double> ExerciseList(TaskParam taskParam)
+   {
+       Map<String,Double>exerciseCaloriesMap = new HashMap<>();
+       Double Push_up_Cal,Pull_up_Cal,Jumping_jacks_Cal,Squats_Cal,Plank_Cal
+               ,Sit_up_Cal,Knee_Pushup_Cal;
+
+       Double height=taskParam.getHeight();
+       Double weight=taskParam.getWeight();
+
+       Push_up_Cal= (3.8* weight*(3.0/3600))*3.5;
+
+       Pull_up_Cal=(3.0*weight*(3.0/3600))*3.5;
+
+       Jumping_jacks_Cal=(8.0*weight*(1.5/3600))*3.5;
+
+       Squats_Cal=(3.0*weight*(3.0/3600))*3.5;
+
+       Plank_Cal=(2.0*weight*(45/3600))*3.5;
+
+       Sit_up_Cal=(3.0*weight*(2/3600))*3.5;
+
+       Knee_Pushup_Cal=(3.0*weight*(3.0/3600))*3.5;
+
+       exerciseCaloriesMap.put("Push_up", Push_up_Cal);
+       exerciseCaloriesMap.put("Pull_up", Pull_up_Cal);
+       exerciseCaloriesMap.put("Jumping_jacks", Jumping_jacks_Cal);
+       exerciseCaloriesMap.put("Squats", Squats_Cal);
+       exerciseCaloriesMap.put("Plank", Plank_Cal);
+       exerciseCaloriesMap.put("Sit_up", Sit_up_Cal);
+       exerciseCaloriesMap.put("Knee_Pushup", Knee_Pushup_Cal);
+
+
+
+       return exerciseCaloriesMap;
+   }
 
 }

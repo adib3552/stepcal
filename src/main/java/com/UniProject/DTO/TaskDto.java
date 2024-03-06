@@ -12,5 +12,5 @@ import java.util.Map;
 @ToString
 public class TaskDto {
     private double Target_Calorie;
-    private List<Map<String,Double>>Exercises;
+    private Map<String,Double>Exercises;
 }
