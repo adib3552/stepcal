@@ -118,7 +118,7 @@ public class UserService {
         else if(taskParam.getGoal().equals("loss")) {
             goal-=200;
         }
-        return (bmr*activityMult(taskParam))+goal;
+        return preciseCal((bmr*activityMult(taskParam))+goal);
     }
     public double activityMult(TaskParam taskParam){
         if(taskParam.getActivity_level().equals("lazy")){
@@ -138,7 +138,10 @@ public class UserService {
         }
         return 0;
     }
-   /**/
+
+    /**
+     *Calorie burn in per repetition for specific exercise
+     */
    public Map<String,Double> ExerciseList(TaskParam taskParam)
    {
        Map<String,Double>exerciseCaloriesMap = new HashMap<>();
@@ -156,23 +159,33 @@ public class UserService {
 
        Squats_Cal=(3.0*weight*(3.0/3600))*3.5;
 
-       Plank_Cal=(2.0*weight*(45/3600))*3.5;
+       Plank_Cal=(2.0*weight*(45.0/3600))*3.5;
 
-       Sit_up_Cal=(3.0*weight*(2/3600))*3.5;
+       Sit_up_Cal=(3.0*weight*(2.0/3600))*3.5;
 
        Knee_Pushup_Cal=(3.0*weight*(3.0/3600))*3.5;
 
-       exerciseCaloriesMap.put("Push_up", Push_up_Cal);
-       exerciseCaloriesMap.put("Pull_up", Pull_up_Cal);
-       exerciseCaloriesMap.put("Jumping_jacks", Jumping_jacks_Cal);
-       exerciseCaloriesMap.put("Squats", Squats_Cal);
-       exerciseCaloriesMap.put("Plank", Plank_Cal);
-       exerciseCaloriesMap.put("Sit_up", Sit_up_Cal);
-       exerciseCaloriesMap.put("Knee_Pushup", Knee_Pushup_Cal);
+       exerciseCaloriesMap.put("Push_up", preciseCal(Push_up_Cal));
+       exerciseCaloriesMap.put("Pull_up", preciseCal(Pull_up_Cal));
+       exerciseCaloriesMap.put("Jumping_jacks", preciseCal(Jumping_jacks_Cal));
+       exerciseCaloriesMap.put("Squats", preciseCal(Squats_Cal));
+       exerciseCaloriesMap.put("Plank", preciseCal(Plank_Cal));
+       exerciseCaloriesMap.put("Sit_up", preciseCal(Sit_up_Cal));
+       exerciseCaloriesMap.put("Knee_Pushup", preciseCal(Knee_Pushup_Cal));
 
 
 
        return exerciseCaloriesMap;
+   }
+
+    /**
+     * Precising all value into 2 decimal point
+     */
+    public Double preciseCal(Double x)
+   {
+       String formattedX = String.format("%.2f", x);
+       Double result = Double.valueOf(formattedX);
+       return result;
    }
 
 }
