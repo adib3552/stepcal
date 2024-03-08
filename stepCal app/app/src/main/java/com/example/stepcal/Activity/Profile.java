@@ -44,7 +44,6 @@ public class Profile extends AppCompatActivity {
         apiInterface.getProfile(" Bearer "+authToken).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                System.out.println(response);
 
                 User profile=response.body();
                 TextView email=findViewById(R.id.email);
