@@ -2,11 +2,15 @@ package com.example.stepcal.API;
 
 
 
+import com.example.stepcal.DTO.CompletedTask;
 import com.example.stepcal.DTO.JwtResponse;
 import com.example.stepcal.DTO.SignInRequest;
 import com.example.stepcal.DTO.Task;
 import com.example.stepcal.DTO.User;
 
+import java.util.List;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -25,5 +29,11 @@ public interface ApiInterface {
 
     @GET("/user/task")
     Call<Task> getTask(@Header("Authorization") String token);
+
+    @POST("/user/add-task")
+    Call<ResponseBody>addTask(@Header("Authorization")String token, @Body CompletedTask task);
+
+    @GET("/user/task-history")
+    Call<List<CompletedTask>>taskHistory(@Header("Authorization")String token);
 
 }
