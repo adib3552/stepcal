@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.stepcal.API.ApiInterface;
@@ -13,7 +13,7 @@ import com.example.stepcal.DTO.Task;
 import com.example.stepcal.R;
 import com.example.stepcal.Retrofit.RetrofitClient;
 
-import java.lang.annotation.Target;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,15 +32,34 @@ public class Tasks extends AppCompatActivity {
         setContentView(R.layout.activity_tasks);
         apiInterface= RetrofitClient.getRetrofit().create(ApiInterface.class);
         authToken=getSavedToken();
-        apiInterface.getTask(" Bearer "+authToken).enqueue(new Callback<Task>() {
+
+        apiInterface.getTask("Bearer "+authToken).enqueue(new Callback<Task>() {
             @Override
             public void onResponse(@NonNull Call<Task> call, @NonNull Response<Task> response) {
-                Task task=response.body();
-                assert task != null;
-                System.out.println(task);
-                TextView target_calorie=findViewById(R.id.target);
-                String ShowCalorie=target_calorie.getText().toString()+task.getTarget_Calorie();
-                target_calorie.setText(ShowCalorie);
+                if(response.isSuccessful()) {
+                    Task task = response.body();
+                    if (task != null) {
+                        // Setting Target Calorie
+                        TextView targetCalorieTextView = findViewById(R.id.target);
+                        String showCalorie = "Target Calorie: " + task.getTarget_Calorie();
+                        targetCalorieTextView.setText(showCalorie);
+
+                        // Adding Exercises
+                        LinearLayout exerciseLayout = findViewById(R.id.exerciseLayout);
+                        Map<String, Double> exercises = task.getExercises();
+                        if (exercises != null) {
+                            for (Map.Entry<String, Double> entry : exercises.entrySet()) {
+                                String exerciseName = entry.getKey();
+                                Double calorieBurned = entry.getValue();
+
+                                TextView exerciseTextView = new TextView(Tasks.this);
+                                String exerciseText = exerciseName + ": " + calorieBurned + " calories burned";
+                                exerciseTextView.setText(exerciseText);
+                                exerciseLayout.addView(exerciseTextView);
+                            }
+                        }
+                    }
+                }
             }
 
             @Override

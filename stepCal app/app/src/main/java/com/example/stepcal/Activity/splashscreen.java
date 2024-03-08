@@ -1,14 +1,13 @@
-package com.example.stepcal;
+package com.example.stepcal.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.stepcal.MainActivity;
+import com.example.stepcal.R;
 
 public class splashscreen extends AppCompatActivity {
 
