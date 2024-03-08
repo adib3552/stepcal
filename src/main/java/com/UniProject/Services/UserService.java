@@ -10,7 +10,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.DoubleToLongFunction;
 
 @Component
 public class UserService {
@@ -50,6 +53,10 @@ public class UserService {
 
         TaskDto task=new TaskDto();
         task.setTarget_Calorie(computeTargetCalorie(taskParam));
+
+        task.setExercises(ExerciseList(taskParam));
+
+        //need to set here task
 
         System.out.println(task);
         return task;
@@ -113,7 +120,7 @@ public class UserService {
         else if(taskParam.getGoal().equals("loss")) {
             goal-=200;
         }
-        return (bmr*activityMult(taskParam))+goal;
+        return preciseCal((bmr*activityMult(taskParam))+goal);
     }
     public double activityMult(TaskParam taskParam){
         if(taskParam.getActivity_level().equals("lazy")){
@@ -134,5 +141,53 @@ public class UserService {
         return 0;
     }
 
+    /**
+     *Calorie burn in per repetition for specific exercise
+     */
+   public Map<String,Double> ExerciseList(TaskParam taskParam)
+   {
+       Map<String,Double>exerciseCaloriesMap = new HashMap<>();
+       Double Push_up_Cal,Pull_up_Cal,Jumping_jacks_Cal,Squats_Cal,Plank_Cal
+               ,Sit_up_Cal,Knee_Pushup_Cal;
+
+       Double height=taskParam.getHeight();
+       Double weight=taskParam.getWeight();
+
+       Push_up_Cal= (3.8* weight*(3.0/3600))*3.5;
+
+       Pull_up_Cal=(3.0*weight*(3.0/3600))*3.5;
+
+       Jumping_jacks_Cal=(8.0*weight*(1.5/3600))*3.5;
+
+       Squats_Cal=(3.0*weight*(3.0/3600))*3.5;
+
+       Plank_Cal=(2.0*weight*(45.0/3600))*3.5;
+
+       Sit_up_Cal=(3.0*weight*(2.0/3600))*3.5;
+
+       Knee_Pushup_Cal=(3.0*weight*(3.0/3600))*3.5;
+
+       exerciseCaloriesMap.put("Push_up", preciseCal(Push_up_Cal));
+       exerciseCaloriesMap.put("Pull_up", preciseCal(Pull_up_Cal));
+       exerciseCaloriesMap.put("Jumping_jacks", preciseCal(Jumping_jacks_Cal));
+       exerciseCaloriesMap.put("Squats", preciseCal(Squats_Cal));
+       exerciseCaloriesMap.put("Plank", preciseCal(Plank_Cal));
+       exerciseCaloriesMap.put("Sit_up", preciseCal(Sit_up_Cal));
+       exerciseCaloriesMap.put("Knee_Pushup", preciseCal(Knee_Pushup_Cal));
+
+
+
+       return exerciseCaloriesMap;
+   }
+
+    /**
+     * Precising all value into 2 decimal point
+     */
+    public Double preciseCal(Double x)
+   {
+       String formattedX = String.format("%.2f", x);
+       Double result = Double.valueOf(formattedX);
+       return result;
+   }
 
 }

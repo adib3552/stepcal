@@ -23,5 +23,5 @@ public class CompletedTask {
     private String email;
     private double calorie_burn;
     private double calorie_intake;
-    private LocalDate date;
+    private String date;
 }

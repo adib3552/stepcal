@@ -43,19 +43,21 @@ public class UserController {
 
     @PostMapping("/add-task")
     public ResponseEntity<String>saveTask(@RequestBody CompletedTask task,HttpServletRequest request){
-        System.out.println(task);
+        //System.out.println(task);
         try {
             task.setEmail((String) request.getAttribute("email"));
-            task.setDate(LocalDate.now());
+            task.setDate(LocalDate.now().toString());
             taskService.saveTask(task);
         }catch (Exception e){
+            System.out.println("in");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed");
         }
-        return ResponseEntity.status(HttpStatus.OK).body("Saved Successfully");
+        System.out.println("ok");
+        return ResponseEntity.status(HttpStatus.OK).body("Saved");
     }
     @GetMapping("/task-today")
     public CompletedTask showCompletedTask(HttpServletRequest request){
-        return taskService.getTask((String)request.getAttribute("email"),LocalDate.now());
+        return taskService.getTask((String)request.getAttribute("email"),LocalDate.now().toString());
     }
     @GetMapping("/task-history")
     public List<CompletedTask>showTaskHistory(HttpServletRequest request){

@@ -28,14 +28,18 @@ public class CompletedTaskService {
         else{
             double burn=completedTask.getCalorie_burn()+task.getCalorie_burn();
             double intake=completedTask.getCalorie_intake()+task.getCalorie_intake();
-            completedTaskRepository.updateCalorie_burn(burn);
-            completedTaskRepository.updateCalorie_intake(intake);
+            completedTaskRepository.updateCalorie_burn(burn, task.getEmail(), task.getDate());
+            completedTaskRepository.updateCalorie_intake(intake, task.getEmail(), task.getDate());
         }
     }
-    public CompletedTask getTask(String email, LocalDate date){
+    public CompletedTask getTask(String email, String date){
         return completedTaskRepository.findByEmailAndDate(email,date);
     }
     public List<CompletedTask>taskHistory(String email){
-        return completedTaskRepository.findAllByEmail(email);
+        List<CompletedTask> progress=completedTaskRepository.findAllByEmail(email);
+        for(CompletedTask task:progress){
+            System.out.println(task);
+        }
+        return progress;
     }
 }

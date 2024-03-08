@@ -13,13 +13,19 @@ import java.util.List;
 
 @Component
 public interface CompletedTaskRepository extends CrudRepository<CompletedTask,Long> {
-    CompletedTask findByEmailAndDate(String email, LocalDate date);
+    CompletedTask findByEmailAndDate(String email, String date);
     @Modifying
-    @Query("Update CompletedTask task set task.calorie_burn=:burn")
-    void updateCalorie_burn(@Param("burn") double burn);
+    @Query("UPDATE CompletedTask task SET task.calorie_burn = :burn " +
+            "WHERE task.email = :email AND task.date = :date")
+    void updateCalorie_burn(@Param("burn") double burn,
+                                        @Param("email") String email,
+                                        @Param("date") String date);
     @Modifying
-    @Query("Update CompletedTask task set task.calorie_intake=:intake")
-    void updateCalorie_intake(@Param("intake") double intake);
+    @Query("UPDATE CompletedTask task SET task.calorie_intake = :intake " +
+            "WHERE task.email = :email AND task.date = :date")
+    void updateCalorie_intake(@Param("intake") double intake,
+                                        @Param("email") String email,
+                                        @Param("date") String date);
     @Query("SELECT task FROM CompletedTask task WHERE task.email = :email")
     List<CompletedTask> findAllByEmail(@Param("email") String email);
 }
