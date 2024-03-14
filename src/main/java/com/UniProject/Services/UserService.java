@@ -57,7 +57,7 @@ public class UserService {
         task.setExercises(ExerciseList(taskParam));
 
         //need to set here task
-
+         Double foodIN=FoodIntake();
         System.out.println(task);
         return task;
     }
@@ -174,6 +174,7 @@ public class UserService {
        exerciseCaloriesMap.put("Plank", preciseCal(Plank_Cal));
        exerciseCaloriesMap.put("Sit_up", preciseCal(Sit_up_Cal));
        exerciseCaloriesMap.put("Knee_Pushup", preciseCal(Knee_Pushup_Cal));
+       //exerciseCaloriesMap.put("Food Intake", FoodIntake());
 
 
 
@@ -189,5 +190,43 @@ public class UserService {
        Double result = Double.valueOf(formattedX);
        return result;
    }
+
+    /**
+     * Food Intake Calculation
+     */
+
+    public Double FoodIntake()
+    {
+
+        // In this initializer take User input as gram measurement Except Egg
+        // Egg Should be taken as number per egg is on avearge 50gm
+        Double Tot_In_Cal=100.0;
+        Double Rice_in=100.0;
+        Double Roti_in=100.0;
+        Double Chicken_in=100.0;
+        int Egg_in=2;
+        Double Milk_in=100.0;
+        Double Salad_in=100.0;
+
+
+        Double Rice_cal=((Rice_in*1.0)/100.0)*130.0;
+
+        Double Roti_cal=((Roti_in*1.0)/100.0)*300.0;
+
+        Double Chicken_cal=((Chicken_in*1.0)/100.0)*239.0;
+
+        double Egg_Cal=(((Egg_in*50.0))/100)*155.0;
+
+        Double Milk_cal=((Milk_in*1.0)/100)*44.0;
+
+        Double Salad_cal=((Salad_in*1.0)/100.0)*17.0;
+
+        Tot_In_Cal=Rice_cal+Roti_cal+Chicken_cal+Egg_Cal+Milk_cal+Salad_cal;
+
+        return  preciseCal(Tot_In_Cal);
+
+
+    }
+
 
 }
