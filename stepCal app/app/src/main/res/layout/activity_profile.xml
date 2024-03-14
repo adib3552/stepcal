@@ -77,9 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/emailLabel"
         android:layout_alignBaseline="@id/emailLabel"
-        android:textSize="18sp"
-        android:text="example@gmail.com"
-        tools:text="example@gmail.com" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/phoneLabel"

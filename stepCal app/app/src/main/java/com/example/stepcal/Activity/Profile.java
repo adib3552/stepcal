@@ -65,6 +65,10 @@ public class Profile extends AppCompatActivity {
                         TextView ageTextView = findViewById(R.id.age);
                         ageTextView.setText(String.valueOf(profile.getAge()));
 
+                        //srtting email
+                        TextView emailTextview = findViewById(R.id.email);
+                        emailTextview.setText(String.valueOf(profile.getEmail()));
+
                         // Setting Gender
                         TextView genderTextView = findViewById(R.id.gender);
                         genderTextView.setText(profile.getGender());
