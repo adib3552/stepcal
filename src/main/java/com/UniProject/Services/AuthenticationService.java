@@ -25,11 +25,14 @@ public class AuthenticationService {
     @Autowired
     private CustomUserDetailsService userService;
 
+    @Autowired
+    private UserService service;
 
     public JwtResponse login(SignInRequest signInRequest){
         //authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signInRequest.getEmail(),signInRequest.getPassword()));
         UserDetails user=userService.loadUserByUsername(signInRequest.getEmail());
-        if(user==null){
+        User checkUser=service.checkUser(signInRequest.getEmail(),signInRequest.getPassword());
+        if(user==null || checkUser==null){
             throw new IllegalArgumentException("Wrong username or password");
         }
         System.out.println(user);
