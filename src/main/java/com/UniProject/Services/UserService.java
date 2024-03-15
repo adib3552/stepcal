@@ -224,6 +224,9 @@ public class UserService {
 
     }
 
+    /**
+     * Creating the LeaderBord
+     */
     public List<Map<String, Object>> getLeaderboard() {
         List<Map<String, Object>> leaderboard = new ArrayList<>();
         for (User user : userRepository.findAll()) {
