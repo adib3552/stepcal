@@ -21,5 +21,4 @@ public class UserDto {
     private String goal;
     private String gender;
     private String activity_level;
-    private int Point;
 }
