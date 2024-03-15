@@ -10,10 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.DoubleToLongFunction;
+import java.util.*;
 
 @Component
 public class UserService {
@@ -55,7 +52,6 @@ public class UserService {
         task.setTarget_Calorie(computeTargetCalorie(taskParam));
 
         task.setExercises(ExerciseList(taskParam));
-
         //need to set here task
          Double foodIN=FoodIntake();
         System.out.println(task);
@@ -227,6 +223,26 @@ public class UserService {
 
 
     }
+
+    public List<Map<String, Object>> getLeaderboard() {
+        List<Map<String, Object>> leaderboard = new ArrayList<>();
+        for (User user : userRepository.findAll()) {
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("name", user.getFirst_name());
+            userMap.put("points", user.getPoint());
+            leaderboard.add(userMap);
+        }
+        Collections.sort(leaderboard, new Comparator<Map<String, Object>>() {
+            @Override
+            public int compare(Map<String, Object> user1, Map<String, Object> user2) {
+                // Compare points in descending order
+                return Integer.compare((int) user2.get("points"), (int) user1.get("points"));
+            }
+        });
+        return leaderboard;
+    }
+
+
 
 
 }

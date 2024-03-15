@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -86,6 +87,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("Verified");
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Wrong verification code");
+    }
+
+    @GetMapping("/leaderboard")
+    public ResponseEntity<List<Map<String, Object>>> getLeaderboard() {
+
+        List<Map<String, Object>> leaderboard = userService.getLeaderboard();
+        return ResponseEntity.ok(leaderboard);
     }
 
 }
