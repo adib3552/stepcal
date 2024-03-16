@@ -72,7 +72,17 @@ public class UserController {
         String email=(String) request.getAttribute("email");
         return userService.forTask(email);
     }
-
+    @PutMapping("/update-point")
+    public ResponseEntity<String> updatePoint(HttpServletRequest request){
+        String email= (String) request.getAttribute("email");
+        try{
+            userService.givePoint(email);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("failed");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("saved");
+    }
+    /*
     @GetMapping("/verify/{email}")
     public ResponseEntity<String> sendEmail(@PathVariable String email){
         userEmail=email;
@@ -90,6 +100,7 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Wrong verification code");
     }
+    */
 
     @GetMapping("/leaderboard")
     public ResponseEntity<List<Map<String, Object>>> getLeaderboard() {

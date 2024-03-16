@@ -4,12 +4,14 @@ import com.UniProject.DTO.DtoImpl;
 import com.UniProject.DTO.TaskDto;
 import com.UniProject.DTO.TaskParam;
 import com.UniProject.DTO.UserDto;
+import com.UniProject.Entities.CompletedTask;
 import com.UniProject.Entities.User;
 import com.UniProject.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Component
@@ -25,6 +27,8 @@ public class UserService {
 
     private TaskParam taskParam;
 
+    @Autowired
+    private CompletedTaskService taskService;
 
 
 
@@ -92,6 +96,24 @@ public class UserService {
     /**
      *For Calorie computation
      */
+
+    public double getBmr(TaskParam taskParam){
+        double a,b,c,d;
+        if(taskParam.getGender().equals("male")){
+            a=88.362;
+            b=13.397;
+            c=4.799;
+            d=5.677;
+        }
+        else{
+            a=447.593;
+            b=9.247;
+            c=3.098;
+            d=4.330;
+        }
+        double bmr=a+(b*taskParam.getWeight())+(c*taskParam.getHeight())-(d*taskParam.getAge());
+        return preciseCal(bmr*activityMult(taskParam));
+    }
     public double computeTargetCalorie(TaskParam taskParam){
         //calculate bmr
         double a,b,c,d;
@@ -221,6 +243,33 @@ public class UserService {
         return  preciseCal(Tot_In_Cal);
 
 
+    }
+
+    int getPoint(String email){
+        return userRepository.getPoint(email);
+    }
+
+
+    @Transactional
+    public void givePoint(String email){
+        int point=getPoint(email);
+        int reward=0;
+
+        CompletedTask complete=taskService.getTask(email, LocalDate.now().toString());
+        UserDto user=dto.convertUserToUserDto(userRepository.findByEmail(email));
+        //setting the parameter to compute
+        taskParam=new TaskParam(user.getAge(),user.getHeight(),
+                user.getWeight(),user.getGoal(),
+                user.getGender(), user.getActivity_level());
+
+        double bmr=getBmr(taskParam);
+        System.out.println(((bmr+complete.getCalorie_burn())-complete.getCalorie_intake()));
+        if(computeTargetCalorie(taskParam)<=((bmr+complete.getCalorie_burn())-complete.getCalorie_intake())){
+            System.out.println("in");
+            reward=50;
+        }
+        point+=reward;
+        userRepository.updatePoint(email,point);
     }
 
     /**
