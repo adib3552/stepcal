@@ -293,24 +293,7 @@ public class UserService {
         return leaderboard;
     }
 
-    public void PointUpdate()
-    {
-        Double target_cal=0.0;
-        Double burn_cal=0.0;
-        Double bmr=0.0;
-        Double inake_cal=0.0;
-        Double d1=target_cal;
-        Double d2=burn_cal+bmr-inake_cal;
-        if(Double.compare(d1, d2) >= 0)
-        {
-            // Point increase
-        }
-        else
-        {
-            //Point Decrease
-        }
-
-    }
+   
 
 
 
