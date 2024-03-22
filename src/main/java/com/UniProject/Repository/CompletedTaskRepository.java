@@ -28,4 +28,8 @@ public interface CompletedTaskRepository extends CrudRepository<CompletedTask,Lo
                                         @Param("date") String date);
     @Query("SELECT task FROM CompletedTask task WHERE task.email = :email")
     List<CompletedTask> findAllByEmail(@Param("email") String email);
+
+    @Modifying
+    @Query("Update CompletedTask task set task.updated=:update where task.email=:email AND task.date=:date")
+    void updateIsUpdate(@Param("update")boolean update,@Param("email") String email,@Param("date") String date);
 }

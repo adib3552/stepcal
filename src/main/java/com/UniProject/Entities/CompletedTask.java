@@ -24,4 +24,5 @@ public class CompletedTask {
     private double calorie_burn;
     private double calorie_intake;
     private String date;
+    private boolean updated;
 }

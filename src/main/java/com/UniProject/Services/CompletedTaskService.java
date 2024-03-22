@@ -42,4 +42,9 @@ public class CompletedTaskService {
         }
         return progress;
     }
+
+    @Transactional
+    public void updateUpdate(boolean update,String email,String date){
+        completedTaskRepository.updateIsUpdate(update,email,date);
+    }
 }

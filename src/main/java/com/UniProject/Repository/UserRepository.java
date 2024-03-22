@@ -23,4 +23,5 @@ public interface UserRepository extends CrudRepository<User,Long> {
     @Modifying
     @Query("Update User u set u.point=:point where u.email=:email")
     void updatePoint(@Param("email") String email,@Param("point") int point);
+
 }
