@@ -265,8 +265,10 @@ public class UserService {
 
         double bmr=getBmr(taskParam);
         System.out.println(((bmr+complete.getCalorie_burn())-complete.getCalorie_intake()));
-        if(computeTargetCalorie(taskParam)<=((bmr+complete.getCalorie_burn())-complete.getCalorie_intake())){
+        if(computeTargetCalorie(taskParam)<=((bmr+complete.getCalorie_burn())-complete.getCalorie_intake())
+        && !complete.isUpdated()){
             System.out.println("in");
+            taskService.updateUpdate(true,email,LocalDate.now().toString());
             reward=50;
         }
         point+=reward;
